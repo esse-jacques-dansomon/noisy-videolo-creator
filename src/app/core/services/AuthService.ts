@@ -6,7 +6,7 @@ import {environment} from "../../../environments/environment";
 import {Router} from "@angular/router";
 import {LoginResponse, LoginResponsePayload} from "../data/LoginResponse";
 import {User} from "../../data/models/user";
-import {Client} from "../../data/models/client";
+import {Creator} from "../../data/models/creator";
 
 
 @Injectable({
@@ -19,10 +19,7 @@ export class AuthService {
 
   connectedUser$ : Observable<LoginResponsePayload> = of(this.getUserConnectedInfo());
 
-  verifyInfos() : Observable<Client> {
-    return  this.http.get<Client>(`${this.apiUrl}jwt/me`);
-    // this._connectedVendor.asObservable();
-  }
+  creator$ : Observable<Creator> = this.http.get<Creator>(`${this.apiUrl}jwt/me`);
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -65,7 +62,7 @@ export class AuthService {
         finalize(() => {
           this.clearLocalStorage();
           // this.stopTokenTimer();
-          this.router.navigate(['/']);
+          this.router.navigate(['/se-connecter']);
         })
       ).subscribe();
   }
@@ -73,7 +70,7 @@ export class AuthService {
   public isLoggedIn() : boolean {
     // Check if current date is greater than expiration for access token and verify if token is present
     let isExpired = this.getExpiration();
-    if (isExpired) {
+    if (isExpired && this._isCreator()) {
       return moment().isBefore(isExpired);
     }
     return false;
@@ -90,6 +87,10 @@ export class AuthService {
     const infos = JSON.parse(atob(payload));
     const expiresAt = infos.exp;
     return moment.unix(expiresAt);
+  }
+
+  _isCreator() : boolean {
+    return this.getUserConnectedInfo().role === 'creator';
   }
 
   forgotPassword(email: string) {
@@ -126,5 +127,15 @@ export class AuthService {
 
   resetPassword(value) : Observable<any>{
     return this.http.post<any>(`${this.apiUrl}jwt/reset-password`, value);
+  }
+
+  updateCreator(creator: any,id : number) : Observable<any>{
+    return this.http.put<any>(`${this.apiUrl}creators/${id}`, creator).pipe(
+      tap(
+        next => {
+          this._connectedVendor.next(this.getUserConnectedInfo());
+          this.creator$ = this.http.get<Creator>(`${this.apiUrl}jwt/me`);
+        }
+    ));
   }
 }

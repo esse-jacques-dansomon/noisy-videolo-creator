@@ -1,0 +1,74 @@
+<div class="header bg-gradient-danger pb-5 pt-5 pt-md-5">
+  <div class="container-fluid">
+    <div class="header-body">
+      <!-- Card stats -->
+    </div>
+  </div>
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--7">
+  <ng-container *ngIf="demand">
+    <ng-template [ngIf]="demand">
+      <section class="request-details-card flex-c-s ">
+        <div class="">
+          <h2 class="form__card-title">Details de la demande</h2>
+          <div class="flex-c-s mt-1">
+            <p>Talend demandé</p>
+            <h4>{{demand.creatorOccasionType.creator.titre}}</h4>
+          </div>
+
+          <div class="flex-c-s ">
+            <p>Video pour</p>
+            <h4>{{demand.receiver}}</h4>
+          </div>
+
+          <div class="flex-c-s">
+            <p>Demandé par </p>
+            <h4>{{demand.sender}} </h4>
+          </div>
+
+          <div class="flex-c-s ">
+            <h4>Instruction </h4>
+            <p class="flex-c-s ">
+              {{demand.message}}
+            </p>
+          </div>
+
+          <div class="flex-c-s">
+            <h4>Actions </h4>
+            <div class="flex ">
+              <button class="btn btn--primary">Uploader la video</button>
+              <button class="btn btn--primary">Rejecter la demande</button>
+            </div>
+          </div>
+        </div>
+        <div class="">
+          <h2 class="form__card-title">Paiement</h2>
+          <div class="flex-c-s">
+            <p>Total</p>
+            <h4>{{demand.price}} FCFA</h4>
+          </div>
+
+          <div class="flex-c-s">
+            <p>Etat payment</p>
+            <h4>{{demand.status}}</h4>
+          </div>
+
+          <div class="flex-c-s">
+            <p>Moyen de paiement </p>
+            <h4> {{demand.payment.type}}</h4>
+          </div>
+
+          <div class="flex-c-s">
+            <p>video uploader</p>
+            <video width="430"  height="340" controls>
+              <source src="https://cdn.cameo.com/static/assets/AboutCameo_FullEdit_v06output.mp4" type="video/ogg">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+
+      </section>
+    </ng-template>
+  </ng-container>
+</div>

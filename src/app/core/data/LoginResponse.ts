@@ -11,7 +11,7 @@ export interface LoginResponse{
 
 export interface LoginResponsePayload {
   id: number;
-  roles: string[];
+  role: string;
   first_name: string;
   last_name: string;
 

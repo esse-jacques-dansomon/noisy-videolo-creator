@@ -5,6 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
+import {CreatorGuard} from "./core/guards/creator.guard";
 
 const routes: Routes =[
   {
@@ -14,6 +15,7 @@ const routes: Routes =[
   }, {
     path: '',
     component: AdminLayoutComponent,
+    canActivate: [CreatorGuard],
     children: [
       {
         path: '',
@@ -40,7 +42,8 @@ const routes: Routes =[
     CommonModule,
     BrowserModule,
     RouterModule.forRoot(routes,{
-      useHash: true
+      useHash: true,
+      scrollPositionRestoration: 'top'
     })
   ],
   exports: [

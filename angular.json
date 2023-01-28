@@ -35,7 +35,8 @@
             ],
             "scripts": [
               "node_modules/chart.js/dist/Chart.min.js",
-              "node_modules/clipboard/dist/clipboard.min.js"
+              "node_modules/clipboard/dist/clipboard.min.js",
+              "./node_modules/notiflix/dist/notiflix-aio-3.2.6.min.js"
             ]
           },
           "configurations": {

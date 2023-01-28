@@ -1,0 +1,23 @@
+.request-details-card{
+  max-width: 1000px;
+  /*box-shadow: 0 0 10px rgba(0,0,0,.1);*/
+  /*background-color: #ffffff;*/
+  margin: 4rem auto;
+  padding: 2rem 1rem;
+  text-align: start;
+  display: grid;
+  grid-template-columns: 1fr ;
+  column-gap: 10px;
+}
+.request-details-card > div{
+  border: 1px solid #ccc;
+  padding: 2rem 1rem;
+
+}
+
+@media screen and (min-width: 600px) {
+  .request-details-card {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+

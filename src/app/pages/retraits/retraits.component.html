@@ -1,0 +1,125 @@
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
+  <div class="container-fluid">
+    <div class="header-body">
+      <form  [formGroup]="retraitForm" (ngSubmit)="retraitForm.valid && submit()">
+        <div class="row align-items-center">
+          <div class="col-md-4">
+            <div class="form-group">
+              <input [formControlName]="'amount'" type="number"  class="form-control form-control-alternative" placeholder="montant" >
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <select  [formControlName]="'moyen_retrait_id'" *ngIf="moyensRetraits$ | async as moyensRetraits" class="form-control form-control-alternative" id="exampleFormControlSelect1">
+                <option  [value]="moyen.id" *ngFor="let moyen of moyensRetraits">{{moyen.phone_number}} - {{moyen.type_moyen.name}} - {{moyen.full_name}} </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <button [disabled]="retraitForm.invalid" type="submit" class="btn btn-primary container-fluid">Demander</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--7">
+  <ng-container *ngIf="retraits$ | withLoading | async as demandsWithPagination">
+    <ng-template [ngIf]="demandsWithPagination.value">
+      <!-- Table -->
+      <div class="row">
+        <div class="col">
+          <div class="card shadow">
+            <div class="card-header border-0">
+              <h3 class="mb-0">Retraits</h3>
+              <!-- Form -->
+<!--              <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">-->
+<!--                <div class="form-group mb-0" [ngClass]="{ 'focused': true }">-->
+<!--                  <div class="input-group input-group-alternative">-->
+<!--                    <div class="input-group-prepend">-->
+<!--                      <span class="input-group-text"><i class="fas fa-search"></i></span>-->
+<!--                    </div>-->
+<!--                    <input class="form-control" placeholder="Search" type="text" (focus)="true"-->
+<!--                           (blur)="true">-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </form>-->
+            </div>
+            <div class="table-responsive">
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                <tr>
+                  <th scope="col">Somme</th>
+                  <th scope="col">Moyen</th>
+                  <th scope="col">compte</th>
+                  <th scope="col">Status</th>
+                  <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let retrait of demandsWithPagination.value.data">
+                  <th scope="row">
+                    <div class="media align-items-center">
+                      <div class="media-body">
+                        <span class="mb-0 text-sm">{{retrait.amount}}</span>
+                      </div>
+                    </div>
+                  </th>
+                  <td>
+                    {{retrait.moyenRetrait.phone_number}}
+                  </td>
+                  <td>
+                    {{retrait.moyenRetrait.full_name}}
+                  </td>
+                  <td>
+                  <span class="badge badge-dot mr-4">
+                    <i class="bg-warning"></i> {{translateStatus(retrait.status)}}
+                  </span>
+                  </td>
+
+                  <td class="text-right">
+                    <div *ngIf="retrait.status == 'pending'" ngbDropdown placement="bottom-right">
+                      <a class="btn btn-sm btn-icon-only text-light"  ngbDropdownToggle>
+                        <i class="fas fa-ellipsis-v"></i>
+                      </a>
+                      <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
+                        <button (click)="cancelRetrait(retrait.id)" class="dropdown-item" >Annuler</button>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="card-footer py-4">
+              <nav aria-label="...">
+                <ul class="pagination justify-content-end mb-0">
+                  <li class="page-item " [ngClass]="demandsWithPagination.value.meta.current_page == 1 ? 'disabled text-primary' : '' ">
+                    <a class="page-link" (click)="pageChanged(demandsWithPagination.value.meta.current_page-1)"  tabindex="-1">
+                      <i class="fas fa-angle-left"></i>
+                      <span class="sr-only">Precedent</span>
+                    </a>
+                  </li>
+                  <li *ngFor="let i of createArray(demandsWithPagination.value.meta.last_page)" class="page-item" [ngClass]="demandsWithPagination.value.meta.current_page == i ? 'disabled text-primary' : '' ">
+                    <a  (click)="pageChanged(i)"  class="page-link" >{{i}} <span class="sr-only"> {{demandsWithPagination.value.meta.current_page==i? '(current)' : ''}}</span></a>
+                  </li>
+                  <li class="page-item" [ngClass]="demandsWithPagination.value.meta.current_page == demandsWithPagination.value.meta.last_page ? 'disabled' : '' ">
+                    <a class="page-link" (click)="pageChanged(demandsWithPagination.value.meta.current_page+1)">
+                      <i class="fas fa-angle-right"></i>
+                      <span class="sr-only">Suivant</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template [ngIf]="demandsWithPagination.error" ></ng-template>
+    <ng-template [ngIf]="demandsWithPagination.loading" ></ng-template>
+  </ng-container>
+</div>

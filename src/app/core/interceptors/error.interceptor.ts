@@ -15,11 +15,13 @@ export class ErrorInterceptor implements HttpInterceptor {
 
    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
       return next.handle(request).pipe(
-         retry(0),
+         retry(1),
          catchError((error: HttpErrorResponse) => {
             if (error.status === 401) {
                this.authService.clearLocalStorage();
-               this.router.navigate(['/auth/login']);
+               this.router.navigate(['/se-connecter']).then(r => {
+                 alert('Votre session a expiré, veuillez vous reconnecter');
+               });
             } else if (error.status === 403) {
               // alert('403');
             } else if (error.status === 404) {

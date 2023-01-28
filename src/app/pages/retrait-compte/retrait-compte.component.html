@@ -1,0 +1,79 @@
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
+  <div class="container-fluid">
+    <div class="header-body">
+    </div>
+  </div>
+</div>
+<div class="container-fluid mt--7">
+  <div class="row ">
+    <div class="col-xl-8 mb-5 mb-xl-0">
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <div class="row align-items-center">
+            <div class="col">
+              <h3 class="mb-0">Comptes Retraits</h3>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive" *ngIf="moyensRetraits$ | async as moyensRetraits">
+          <!-- Projects table -->
+          <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+            <tr>
+              <th scope="col">Nom</th>
+              <th scope="col">Telephone</th>
+              <th scope="col">Type Moyen</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let moyenRetrait of moyensRetraits">
+              <th scope="row">
+                {{moyenRetrait.full_name}}
+              </th>
+              <td>
+                {{moyenRetrait.phone_number}}
+              </td>
+              <td>
+                {{moyenRetrait.type_moyen.name}}
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-4">
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <div class="row align-items-center">
+            <div class="col">
+              <h3 class="mb-0">Ajouter un compte de retrait</h3>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <!-- Projects table -->
+          <form [formGroup]="AddMoyenForm" (ngSubmit)="AddMoyenForm.valid && update()">
+            <div class="container">
+              <div class="form-group">
+                <label class="form-control-label" for="first_name">Nom Complet</label>
+                <input [formControlName]="'full_name'" type="text" id="first_name" class="form-control form-control-alternative" placeholder="Nom COmplet" >
+              </div>
+              <div class="form-group">
+                <label class="form-control-label">Téléphone</label>
+                <input [formControlName]="'phone_number'" type="text" id="last_namej" class="form-control form-control-alternative" placeholder="Téléphone">
+              </div>
+              <div class="form-group" *ngIf="typeMoyens$ | async as typeMoyens">
+                <label class="form-control-label">Type moyen</label>
+                <select [formControlName]="'type_moyen_id'" class="form-control form-control-alternative">
+                  <option *ngFor="let type of typeMoyens" [value]="type.id">{{type.name}}</option>/option>
+                </select>
+              </div>
+              <button [disabled]="AddMoyenForm.invalid" class="container-fluid btn-primary mb-4" type="submit">Sauvegarder</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

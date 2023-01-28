@@ -8,6 +8,9 @@ import {
   chartExample1,
   chartExample2
 } from "../../variables/charts";
+import {CreatorService} from "../../data/services/creator.service";
+import {Observable} from "rxjs";
+import {statsModel} from "../../data/models/statsModel";
 
 @Component({
   selector: 'app-dashboard',
@@ -21,6 +24,7 @@ export class DashboardComponent implements OnInit {
   public salesChart;
   public clicked: boolean = true;
   public clicked1: boolean = false;
+   statistiques$ : Observable<statsModel> = this.creatorService.getOneByTypeAndUri$('stats');
 
   ngOnInit() {
 
@@ -49,6 +53,10 @@ export class DashboardComponent implements OnInit {
 			options: chartExample1.options,
 			data: chartExample1.data
 		});
+  }
+
+
+  constructor(private creatorService: CreatorService) {
   }
 
 
