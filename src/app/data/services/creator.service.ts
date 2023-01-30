@@ -20,4 +20,8 @@ export class CreatorService extends ResourceService<Creator> {
 
   askRetrait$ = (data: any) => this.http.post<any>(`${API_CONSTANTES.URI_CREATORS}/retrait`, data);
 
+  getById$ = (id: number) => this.http.get<Creator>(`${API_CONSTANTES.URI_CREATORS}/${id}`);
+
+  addOccasionType$ = (data: any, id : number) => this.http.post<any>(`${API_CONSTANTES.URI_CREATORS}/${id}/type_occasions`, data);
+
 }

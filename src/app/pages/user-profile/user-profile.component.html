@@ -34,20 +34,20 @@
             </div>
           </div>
           <div class="card-body pt-0 pt-md-4">
-<!--            <div class="row">-->
-<!--              <div class="col">-->
-<!--                <div class="card-profile-stats d-flex justify-content-center mt-md-5">-->
-<!--                  <div>-->
-<!--                    <span class="heading">10</span>-->
-<!--                    <span class="description">Demandes</span>-->
-<!--                  </div>-->
-<!--                  <div>-->
-<!--                    <span class="heading">89</span>-->
-<!--                    <span class="description">Avis</span>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
+            <!--            <div class="row">-->
+            <!--              <div class="col">-->
+            <!--                <div class="card-profile-stats d-flex justify-content-center mt-md-5">-->
+            <!--                  <div>-->
+            <!--                    <span class="heading">10</span>-->
+            <!--                    <span class="description">Demandes</span>-->
+            <!--                  </div>-->
+            <!--                  <div>-->
+            <!--                    <span class="heading">89</span>-->
+            <!--                    <span class="description">Avis</span>-->
+            <!--                  </div>-->
+            <!--                </div>-->
+            <!--              </div>-->
+            <!--            </div>-->
             <div class="text-center">
               <h3>
                 {{creator.last_name}} {{creator.first_name}} <span class="font-weight-light">, 27</span>
@@ -75,9 +75,6 @@
             <div class="row align-items-center">
               <div class="col-8">
                 <h3 class="mb-0">Mon compte</h3>
-              </div>
-              <div class="col-4 text-right">
-                <a href="#!" class="btn btn-sm btn-primary">Paremettre</a>
               </div>
             </div>
           </div>
@@ -153,24 +150,54 @@
               </div>
               <button class="container-fluid btn-outline-primary" type="submit">Sauvegarder</button>
             </form>
-            <hr class="my-4"/>
-            <!-- Description -->
-            <h6 class="heading-small text-muted mb-4">Occasions</h6>
-            <div class="col" *ngFor="let occasion of occasionTypes">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Prix pour {{occasion.name}}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-12 order-xl-1">
+      <div class="card bg-secondary shadow">
+        <div class="card-header bg-white border-0">
+          <div class="row align-items-center">
+            <div class="col-8">
+              <h3 class="mb-0">Occasions</h3>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <!-- Description -->
+          <!--          <h6 class="heading-small text-muted mb-4">Occasions</h6>-->
+          <div class="col" >
+            <div class="col-md-12">
+              <form action="" [formGroup]="occasionForm" (ngSubmit)="occasionForm.valid && updateOccasionForm()">
+                <div class="row align-items-end">
+                  <div class="col-md-6">
+                    <div class="form-group" >
+                      <label  class="form-check-label" >Prix pour normal</label>
+                      <input [formControlName]="'priceNormal'"  type="text" class="form-control form-control-alternative" placeholder="{{getOccasionPrice(1)}}" >
+                    </div>
                   </div>
-                  <input type="text" class="form-control form-control-alternative" placeholder="{{getOccasionPrice(occasion.id)}}" >
+                  <div class="col-md-6">
+                    <button (click)="saveNormal()" type="submit" class="form-group container btn btn-primary">Enregistrer Normal</button>
+                  </div>
                 </div>
-              </div>
+                <div class="row align-items-end">
+                  <div class="col-md-6">
+                    <div class="form-group" >
+                      <label  class="form-check-label" >Prix pour entreprise</label>
+                      <input [formControlName]="'priceEntreprise'"  type="text" class="form-control form-control-alternative" placeholder="{{getOccasionPrice(1)}}" >
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <button (click)="saveEntreprise()"  class="form-group container btn btn-primary">Enregistrer Entreprise</button>
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
         </div>
       </div>
     </div>
+
   </div>
 </ng-container>
 
