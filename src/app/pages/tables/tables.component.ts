@@ -5,6 +5,7 @@ import {AuthService} from "../../core/services/AuthService";
 import {PaginationType} from "../../core/data/PaginationType";
 import {Demande} from "../../data/models/demande";
 import {Observable} from "rxjs";
+import {FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-tables',
@@ -17,6 +18,18 @@ export class TablesComponent implements OnInit {
 
   constructor(private _demandService : DemandService, private _authService : AuthService) { }
 
+  statusList = [
+    {value: 'waiting_for_payment', viewValue: 'En attente de paiement'},
+    {value: 'pending', viewValue: 'En cours'},
+    {value: 'completed', viewValue: 'Terminé'},
+    {value: 'accepted', viewValue: 'Accepté'},
+    {value: 'canceled', viewValue: 'Annulé'},
+    {value: 'waiting_for_refunded', viewValue: 'En attente de remboursement'},
+    {value: 'refunded', viewValue: 'Remboursé'},
+    {value: 'rejected', viewValue: 'Décliné'}
+  ];
+  filterDemand: FormGroup;
+
   ngOnInit() {
     if (!this._authService.isLoggedIn()) {
     } else {
@@ -28,6 +41,11 @@ export class TablesComponent implements OnInit {
         });
 
     }
+    this.filterDemand = new FormGroup({
+      status: new FormControl(''),
+      code: new FormControl(''),
+      name: new FormControl(''),
+    });
   }
 
   translateStatus(status: string ) : string{
@@ -64,5 +82,9 @@ export class TablesComponent implements OnInit {
 
   pageChanged(i: any) {
     this.demands$ = this._demandService.getOneByTypeAndUriAndPage$('creator/' +this._authService.getUserConnectedInfo().id, i) as Observable<PaginationType<Demande>>;
+  }
+
+  sumbmitFilter() {
+    this.demands$ = this._demandService.addOneByTypeAndUri$('creator/' + this._authService.getUserConnectedInfo().id+ '/filter', this.filterDemand.value) as Observable<PaginationType<Demande>>;
   }
 }

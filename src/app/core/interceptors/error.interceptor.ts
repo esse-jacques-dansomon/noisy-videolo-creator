@@ -20,7 +20,6 @@ export class ErrorInterceptor implements HttpInterceptor {
             if (error.status === 401) {
                this.authService.clearLocalStorage();
                this.router.navigate(['/se-connecter']).then(r => {
-                 alert('Votre session a expiré, veuillez vous reconnecter');
                });
             } else if (error.status === 403) {
               // alert('403');

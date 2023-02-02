@@ -7,32 +7,31 @@
 </div>
 <!-- Page content -->
 <div class="container-fluid mt--7">
+  <div class="card-header border-0 ">
+    <form [formGroup]="filterDemand" (ngSubmit)="filterDemand.valid && sumbmitFilter()" class="flex-row row flex align-items-center">
+      <div class="form-group col">
+        <select [formControlName]="'status'" class="form-control" id="exampleFormControlSelect1">
+          <option selected value="">Status</option>
+          <option [value]="status.value" *ngFor="let status of statusList">{{status.viewValue}}</option>
+        </select>
+      </div>
+      <div class="form-group col">
+        <input  [formControlName]="'code'"  type="text" id="code" class="form-control form-control-alternative" placeholder="code" >
+      </div>
+      <div class="form-group col">
+        <input [formControlName]="'name'" type="text" id="first_name" class="form-control form-control-alternative" placeholder="client" >
+      </div>
+      <div class="form-group col-md">
+        <button [disabled]="filterDemand.invalid"  type="submit" class="btn btn-primary container">chercher</button>
+      </div>
+    </form>
+  </div>
   <ng-container *ngIf="demands$ | withLoading | async as demandsWithPagination">
     <ng-template [ngIf]="demandsWithPagination.value">
       <!-- Table -->
       <div class="row">
         <div class="col">
           <div class="card shadow">
-            <div class="card-header border-0 flex ">
-              <h3 class="mb-0">Demandes</h3>
-              <form class="row">
-                <div class="form-group">
-                  <select class="form-control" id="exampleFormControlSelect1">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <input [formControlName]="'full_name'" type="text" id="first_name" class="form-control form-control-alternative" placeholder="Nom COmplet" >
-                </div>
-                <div class="form-group">
-                  <input [formControlName]="'full_name'" type="text" id="first_name" class="form-control form-control-alternative" placeholder="Nom COmplet" >
-                </div>
-              </form>
-            </div>
             <div class="table-responsive">
               <table class="table align-items-center table-flush">
                 <thead class="thead-light">

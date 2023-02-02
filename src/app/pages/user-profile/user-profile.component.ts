@@ -18,6 +18,10 @@ export class UserProfileComponent implements OnInit {
   profilForm : FormGroup ;
   occasionTypes: OccasionType[];
   occasionForm: FormGroup;
+  imageProfile: any;
+  private selectedFile: File;
+  preview: any = null;
+  previewVideo: Boolean;
 
   constructor(
     private authService : AuthService,
@@ -142,5 +146,24 @@ export class UserProfileComponent implements OnInit {
       price : this.occasionForm.get('priceNormal').value,
     }
     this.addOccasion(dataNormal);
+  }
+
+  upLaodProfileImage(event: any) {
+    this.selectedFile = event.target.files[0];
+
+    if (this.selectedFile) {
+      const file: File | null = this.selectedFile;
+      if (file) {
+        this.imageProfile = file;
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          this.imageProfile = file;
+          this.preview = e.target.result;
+        };
+        reader.readAsDataURL(this.imageProfile);
+      }
+    }
+
+
   }
 }

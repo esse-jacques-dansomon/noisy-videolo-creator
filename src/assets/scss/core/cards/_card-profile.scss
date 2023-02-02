@@ -6,7 +6,8 @@
     position: relative;
 
     img {
-        max-width: 180px;
+        width: 175px;
+        height: 255px;
         border-radius: $border-radius;
         @extend .shadow;
         transform: translate(-50%,-30%);
@@ -15,7 +16,24 @@
         transition: $transition-base;
 
         &:hover {
-            transform: translate(-50%, -33%);
+            //transform: translate(-50%, -33%);
+        }
+    }
+}
+
+.card-profile-video{
+    video {
+        width: 175px;
+        height: 255px;
+        border-radius: $border-radius;
+        @extend .shadow;
+        transform: translate(-50%,-30%);
+        position: absolute;
+        left: 50%;
+        transition: $transition-base;
+
+        &:hover {
+            //transform: translate(-50%, -33%);
         }
     }
 }

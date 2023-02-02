@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import {Observable} from "rxjs";
+import {Creator} from "../../data/models/creator";
+import {AuthService} from "../../core/services/AuthService";
 
 declare interface RouteInfo {
   path: string;
@@ -26,8 +29,8 @@ export class SidebarComponent implements OnInit {
 
   public menuItems: any[];
   public isCollapsed = true;
-
-  constructor(private router: Router) { }
+  creator$ : Observable<Creator>  = this._authService.creator$;
+  constructor(private router: Router, private _authService : AuthService) { }
 
   ngOnInit() {
     this.menuItems = ROUTES.filter(menuItem => menuItem);

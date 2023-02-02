@@ -3,16 +3,6 @@
        style="min-height: 300px; background-image: url({{creator.profile_image}}); background-size: cover; background-position: center top;">
     <!-- Mask -->
     <span class="mask bg-gradient-danger opacity-8"></span>
-    <!-- Header container -->
-    <!--    <div class="container-fluid d-flex align-items-center">-->
-    <!--      <div class="row">-->
-    <!--        <div class="col-lg-7 col-md-10">-->
-    <!--          <h1 class="display-2 text-white">Hello Jesse</h1>-->
-    <!--          <p class="text-white mt-0 mb-5">This is your profile page. You can see the progress you've made with your work and manage your projects or assigned tasks</p>-->
-    <!--          <a href="#!" class="btn btn-info">Edit profile</a>-->
-    <!--        </div>-->
-    <!--      </div>-->
-    <!--    </div>-->
   </div>
   <div class="container-fluid mt--7">
     <div class="row">
@@ -21,50 +11,39 @@
           <div class="row justify-content-center">
             <div class="col-lg-3 order-lg-2">
               <div class="card-profile-image">
-                <a href="javascript:void(0)">
-                  <img [src]="creator.profile_image" class="rounded-circle" height="135" width="135">
-                </a>
+                <label for="image" class="">
+                  <img [src]="preview != null ? preview : creator.profile_image" height="135" width="135" alt="">
+                </label>
               </div>
             </div>
           </div>
           <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
             <div class="d-flex justify-content-between">
-              <a href="javascript:void(0)" class="btn btn-sm btn-info mr-4">image</a>
-              <a href="javascript:void(0)" class="btn btn-sm btn-default float-right">video</a>
+              <input (change)="upLaodProfileImage($event)" type="file" id="image" accept="image/png, image/gif, image/jpeg" hidden>
+              <input  type="file" id="video" accept="image/png, image/gif, image/jpeg" hidden>
             </div>
           </div>
           <div class="card-body pt-0 pt-md-4">
-            <!--            <div class="row">-->
-            <!--              <div class="col">-->
-            <!--                <div class="card-profile-stats d-flex justify-content-center mt-md-5">-->
-            <!--                  <div>-->
-            <!--                    <span class="heading">10</span>-->
-            <!--                    <span class="description">Demandes</span>-->
-            <!--                  </div>-->
-            <!--                  <div>-->
-            <!--                    <span class="heading">89</span>-->
-            <!--                    <span class="description">Avis</span>-->
-            <!--                  </div>-->
-            <!--                </div>-->
-            <!--              </div>-->
-            <!--            </div>-->
             <div class="text-center">
               <h3>
-                {{creator.last_name}} {{creator.first_name}} <span class="font-weight-light">, 27</span>
+<!--                {{creator.last_name}} {{creator.first_name}} <span class="font-weight-light">, 27</span>-->
               </h3>
               <div class="h5 font-weight-300">
-                <i class="ni location_pin mr-2"></i>{{creator.titre}}
+<!--                <i class="ni location_pin mr-2"></i>{{creator.titre}}-->
               </div>
               <div class="h5 mt-4">
-                <i class="ni business_briefcase-24 mr-2"></i>{{creator.titre}}
+<!--                <i class="ni business_briefcase-24 mr-2"></i>{{creator.titre}}-->
               </div>
               <div>
-                <i class="ni education_hat mr-2"></i>{{creator.pseudo_social_network}}
+<!--                <i class="ni education_hat mr-2"></i>{{creator.pseudo_social_network}}-->
+              </div>
+              <div class="mt-8">
+                cliquez sur l'image pour changer votre photo de profil
               </div>
               <hr class="my-4" />
               <p>{{creator.description}}.</p>
               <hr class="my-4" />
-              <iframe width="100%" height="315" src="https://www.youtube.com/embed/1Q8fG0TtVAY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              <iframe width="100%" height="315" src="https://media.vidoleo.com/video/profil/laurentpaganelli2.mp4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
           </div>
         </div>

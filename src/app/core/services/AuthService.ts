@@ -5,7 +5,6 @@ import {BehaviorSubject, finalize, Observable, of, tap} from 'rxjs';
 import {environment} from "../../../environments/environment";
 import {Router} from "@angular/router";
 import {LoginResponse, LoginResponsePayload} from "../data/LoginResponse";
-import {User} from "../../data/models/user";
 import {Creator} from "../../data/models/creator";
 
 
