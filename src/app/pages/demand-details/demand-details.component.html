@@ -34,11 +34,11 @@
             </p>
           </div>
 
-          <div class="flex-c-s">
+          <div class="flex-c-s" *ngIf="demand.status=='pending'">
             <h4>Actions </h4>
             <div class="flex ">
-              <button class="btn btn--primary">Uploader la video</button>
-              <button class="btn btn--primary">Rejecter la demande</button>
+              <button *ngIf="demand.status=='pending'" class="btn btn-primary ">Uploader la video</button>
+              <button *ngIf="demand.status=='pending'" (click)="cancelDemand(demand.id)" class="btn btn-danger">Rejecter la demande</button>
             </div>
           </div>
         </div>
@@ -50,18 +50,18 @@
           </div>
 
           <div class="flex-c-s">
-            <p>Etat payment</p>
+            <p>Etat demande</p>
             <h4>{{demand.status}}</h4>
           </div>
 
-          <div class="flex-c-s">
+          <div class="flex-c-s" *ngIf="demand.payment.type">
             <p>Moyen de paiement </p>
             <h4> {{demand.payment.type}}</h4>
           </div>
 
           <div class="flex-c-s">
             <p>video uploader</p>
-            <video width="430"  height="340" controls>
+            <video width="330"  height="300" controls>
               <source src="https://cdn.cameo.com/static/assets/AboutCameo_FullEdit_v06output.mp4" type="video/ogg">
               Your browser does not support the video tag.
             </video>
