@@ -26,5 +26,9 @@ export class DemandService extends ResourceService<Demande> {
 
   public putDemandeStatus$ = (id : number) : Observable<Demande> => this.http.put<Demande>(API_CONSTANTES.URI_DEMANDES_VIDEOS + '/cancel/' + id , null);
 
+  public uploadVideos$(id : number, formData: FormData) : Observable<any> {
+    return this.http.post<any>(API_CONSTANTES.URI_BECAME_CREATOR+ '/upload/' + id, formData);
+  }
+
 
 }
