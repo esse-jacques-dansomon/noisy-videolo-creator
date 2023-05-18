@@ -14,21 +14,21 @@
           <h2 class="form__card-title">Details de la demande</h2>
           <div class="flex-c-s mt-1">
             <p>Talend demandé</p>
-            <h4>{{demand.creatorOccasionType.creator.titre}}</h4>
+            <h4 class="mt-n3">{{demand.creatorOccasionType.creator.titre}}</h4>
           </div>
 
-          <div class="flex-c-s ">
+          <div class="flex-c-s">
             <p>Video pour</p>
-            <h4>{{demand.receiver}}</h4>
+            <h4 class="mt-n3">{{demand.receiver}}</h4>
           </div>
 
           <div class="flex-c-s">
             <p>Demandé par </p>
-            <h4>{{demand.sender}} </h4>
+            <h4 class="mt-n3">{{demand.client.last_name}} {{demand.client.first_name}}</h4>
           </div>
 
           <div class="flex-c-s ">
-            <h4>Instruction </h4>
+            <h4>Instructions</h4>
             <p class="flex-c-s ">
               {{demand.message}}
             </p>
@@ -51,6 +51,13 @@
             <button type="button" (click)="formVisible()" class="btn btn-danger">Annuler</button>
             </form>
           </div>
+
+          <div class="flex-c-s mt-1" *ngIf="demand.comment">
+            <h4>Commentaire</h4>
+            <p class="flex-c-s">
+              {{demand.comment.body}}
+            </p>
+          </div>
           
 
         </div>
@@ -58,17 +65,17 @@
           <h2 class="form__card-title">Paiement</h2>
           <div class="flex-c-s">
             <p>Total</p>
-            <h4>{{demand.price}} FCFA</h4>
+            <h4 class="mt-n3">{{demand.price}} FCFA</h4>
           </div>
 
           <div class="flex-c-s">
             <p>Etat demande</p>
-            <h4>{{demand.status}}</h4>
+            <h4 class="mt-n3">{{demand.status}}</h4>
           </div>
 
           <div class="flex-c-s" *ngIf="demand.payment.type">
             <p>Moyen de paiement </p>
-            <h4> {{demand.payment.type}}</h4>
+            <h4 class="mt-n3"> {{demand.payment.type}}</h4>
           </div>
 
           <div *ngIf="videoVisible" class="flex-c-s">
@@ -78,7 +85,12 @@
               Your browser does not support the video tag.
             </video>
           </div>
+
+          
+
         </div>
+
+        
 
       </section>
     </ng-template>
