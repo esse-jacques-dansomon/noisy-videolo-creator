@@ -37,10 +37,22 @@
           <div class="flex-c-s" *ngIf="demand.status=='pending'">
             <h4>Actions </h4>
             <div class="flex ">
-              <button *ngIf="demand.status=='pending'" class="btn btn-primary ">Uploader la video</button>
-              <button *ngIf="demand.status=='pending'" (click)="cancelDemand(demand.id)" class="btn btn-danger">Rejecter la demande</button>
+              <button *ngIf="demand.status=='pending'" class="btn btn-primary" (click)="formVisible()">Uploader la video</button>
+              <button *ngIf="demand.status=='pending'" (click)="cancelDemand(demand.id)" class="btn btn-danger">Rejeter la demande</button>
             </div>
           </div>
+
+          <div class="flex-c-s mt-2" *ngIf="fileFormVisible">
+            <form [formGroup]="videoForm" (ngSubmit)="onSubmit()">
+            <span>Format mp4</span> <br>
+            <input type="file" (change)="onFileSelected($event)" formControlName="video" accept="video/mp4" required><br>
+            <br>
+            <button type="submit" class="btn btn-primary">Envoyer la vidéo</button>
+            <button type="button" (click)="formVisible()" class="btn btn-danger">Annuler</button>
+            </form>
+          </div>
+          
+
         </div>
         <div class="">
           <h2 class="form__card-title">Paiement</h2>
@@ -59,10 +71,10 @@
             <h4> {{demand.payment.type}}</h4>
           </div>
 
-          <div class="flex-c-s">
+          <div *ngIf="videoVisible" class="flex-c-s">
             <p>video uploader</p>
-            <video width="330"  height="300" controls>
-              <source src="https://cdn.cameo.com/static/assets/AboutCameo_FullEdit_v06output.mp4" type="video/ogg">
+            <video width="330"  height="300" controls autoplay>
+              <source [src]="baseUrl" type="video/mp4">
               Your browser does not support the video tag.
             </video>
           </div>

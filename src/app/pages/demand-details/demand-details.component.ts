@@ -4,6 +4,9 @@ import {Demande} from "../../data/models/demande";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Confirm} from "notiflix";
 import {NotiflixService} from "../../core/services/notiflix.service";
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { error } from 'console';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-demand-details',
@@ -12,27 +15,42 @@ import {NotiflixService} from "../../core/services/notiflix.service";
 })
 export class DemandDetailsComponent implements OnInit {
 
+  baseUrl:string = environment.mediaUrl;
   code : string = this._route.snapshot.params['slug'];
   demand : Demande ;
+  videoForm: FormGroup;
+  selectedVideo:File;
+  fileFormVisible:boolean = false;
+  videoVisible:boolean = false;
   constructor(
     private _demandService : DemandService,
     private _route: ActivatedRoute,
     private _router : Router,
-    private _notiflixService : NotiflixService
-
-  ) { }
+    private _notiflixService : NotiflixService,
+    private formBuilder: FormBuilder
+  ) {
+    this.videoForm = this.formBuilder.group({
+      video: [null]
+    });
+   }
 
   ngOnInit(): void {
     this._demandService.getDemandeByClientAndCode$(this.code).subscribe(
       {
         next: (data) => {
           this.demand = data;
+          if(this.demand.demand_media){
+            this.videoVisible = true;
+            this.baseUrl = this.baseUrl + this.demand.demand_media.name;
+          }
         },
         error: (err) => {
           this._router.navigateByUrl('/demandes');
         }
       }
     )
+    
+    
   }
 
   cancelDemand(id : number) {
@@ -65,4 +83,29 @@ export class DemandDetailsComponent implements OnInit {
       },);
 
   }
+
+  onSubmit() {
+    if(this.videoForm.valid){
+      /* const videoFile: File = this.videoForm.get('video').value;
+      console.log(videoFile);*/
+      const formData = new FormData(); 
+      formData.append('video', this.selectedVideo, this.selectedVideo.name);
+      this._demandService.uploadVideos$(this.demand.id, formData).subscribe(
+        data =>{
+          this._notiflixService.success('Video envoyée avec succès');
+          location.reload();
+        }
+      )
+    }
+  }
+
+  onFileSelected(event: any) {
+    this.selectedVideo = event.target.files[0];
+  }
+
+  formVisible(event: any){
+    this.fileFormVisible = !this.fileFormVisible;
+  }
+
+  
 }

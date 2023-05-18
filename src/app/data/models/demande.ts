@@ -2,6 +2,7 @@ import {DemandeOption} from "./demande-option";
 import {Comment} from "./comment";
 import {CreatorOccasionType} from "./creator-occasion-type.interceptor";
 import {Client} from "./client";
+import { DemandMedia } from "./demand-media";
 
 export interface Demande {
   sender: any;
@@ -18,7 +19,7 @@ export interface Demande {
   options:          DemandeOption[];
   comment: Comment,
   payment: Payment,
-
+  demand_media: DemandMedia
 }
 
 export interface Payment {

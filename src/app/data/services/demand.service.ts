@@ -30,5 +30,8 @@ export class DemandService extends ResourceService<Demande> {
     return this.http.post<any>(API_CONSTANTES.URI_BECAME_CREATOR+ '/upload/' + id, formData);
   }
 
+  public downloadVideo$(id : number) : Observable<any> {
+    return this.http.get<any>(API_CONSTANTES.URI_BECAME_CREATOR+ '/download/' + id);
+  }
 
 }
