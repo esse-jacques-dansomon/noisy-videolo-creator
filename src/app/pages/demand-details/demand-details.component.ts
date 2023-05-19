@@ -22,6 +22,7 @@ export class DemandDetailsComponent implements OnInit {
   selectedVideo:File;
   fileFormVisible:boolean = false;
   videoVisible:boolean = false;
+  validationVisible:boolean = false;
   constructor(
     private _demandService : DemandService,
     private _route: ActivatedRoute,
@@ -100,7 +101,12 @@ export class DemandDetailsComponent implements OnInit {
   }
 
   onFileSelected(event: any) {
-    this.selectedVideo = event.target.files[0];
+    //Si le fichier est une video mp4
+    if(event.target.files[0].type == "video/mp4"){
+      this.validationVisible = true;
+      this.selectedVideo = event.target.files[0];
+    }
+    
   }
 
   formVisible(event: any){

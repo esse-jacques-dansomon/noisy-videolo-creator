@@ -45,10 +45,10 @@
           <div class="flex-c-s mt-2" *ngIf="fileFormVisible">
             <form [formGroup]="videoForm" (ngSubmit)="onSubmit()">
             <span>Format mp4</span> <br>
-            <input type="file" (change)="onFileSelected($event)" formControlName="video" accept="video/mp4" required><br>
+            <input id="video-input" type="file" (change)="onFileSelected($event)" formControlName="video" accept="video/mp4" required><br>
             <br>
-            <button type="submit" class="btn btn-primary">Envoyer la vidéo</button>
-            <button type="button" (click)="formVisible()" class="btn btn-danger">Annuler</button>
+            <button *ngIf="validationVisible" type="submit" class="btn btn-primary">Envoyer la vidéo</button>
+            <button *ngIf="validationVisible" type="button" (click)="formVisible()" class="btn btn-danger">Annuler</button>
             </form>
           </div>
 

@@ -21,3 +21,23 @@
   }
 }
 
+#video-input{
+  background: white;
+  border-radius: 50px;
+  box-shadow: 5px 5px 10px black;
+  width: 350px;
+}
+
+::-webkit-file-upload-button{
+  color:white;
+  background: #206a5d;
+  padding: 20px;
+  border:none;
+  border-radius:50px;
+  box-shadow:lpx 0 lpx lpx #6b4559;
+  outline:none;
+}
+
+::-webkit-file-upload-button:hover{
+  background: #438a5e;  
+}

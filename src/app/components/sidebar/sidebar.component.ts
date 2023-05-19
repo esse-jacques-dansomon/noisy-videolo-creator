@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import {Observable} from "rxjs";
 import {Creator} from "../../data/models/creator";
 import {AuthService} from "../../core/services/AuthService";
+import { environment } from 'src/environments/environment';
+import { CreatorService } from 'src/app/data/services/creator.service';
 
 declare interface RouteInfo {
   path: string;
@@ -30,12 +32,23 @@ export class SidebarComponent implements OnInit {
   public menuItems: any[];
   public isCollapsed = true;
   creator$ : Observable<Creator>  = this._authService.creator$;
-  constructor(private router: Router, private _authService : AuthService) { }
+  myaccountLink= environment.publicWebsiteUrl;
+  howDoesItWorkLink= environment.publicWebsiteUrl+"comment-ca-marche";
+  creator: Creator;
+  constructor(private router: Router, private _authService : AuthService, private _creatorService:CreatorService) { }
 
   ngOnInit() {
     this.menuItems = ROUTES.filter(menuItem => menuItem);
     this.router.events.subscribe((event) => {
       this.isCollapsed = true;
     });
+    this._creatorService.getById$(this._authService.getUserConnectedInfo().id).subscribe(
+      {
+        next: (data) => {
+          this.creator = data;
+          this.myaccountLink = this.myaccountLink+"createurs/"+this.creator.slug;
+        }
+      }
+    )
   }
 }
