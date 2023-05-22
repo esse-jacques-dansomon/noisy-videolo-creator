@@ -8,7 +8,7 @@
         <a class="nav-link pr-0" role="button" ngbDropdownToggle>
           <div class="media align-items-center" *ngIf="creator$ | async as creator">
             <span class="avatar avatar-sm rounded-circle">
-              <img [src]="creator.profile_image">
+              <img [src]="profilePicture+''+creator.profile_image">
             </span>
             <div class="media-body ml-2 d-none d-lg-block">
               <span class="mb-0 text-sm  font-weight-bold">{{creator.last_name}} {{creator.first_name}}</span>

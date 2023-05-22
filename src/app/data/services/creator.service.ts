@@ -24,4 +24,12 @@ export class CreatorService extends ResourceService<Creator> {
 
   addOccasionType$ = (data: any, id : number) => this.http.post<any>(`${API_CONSTANTES.URI_CREATORS}/${id}/type_occasions`, data);
 
+  public updateProfilPicture(data: FormData, id: number) {
+    return this.http.post<any>(`${API_CONSTANTES.URI_CREATORS}/${id}/avatar`, data);
+  }
+
+  public updateProfilVideo(data: FormData, id: number) {
+    return this.http.post<any>(`${API_CONSTANTES.URI_CREATORS}/${id}/video`, data);
+  }
+
 }

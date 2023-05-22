@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import {AuthService} from "../../core/services/AuthService";
 import {Creator} from "../../data/models/creator";
 import {Observable} from "rxjs";
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-navbar',
@@ -15,7 +16,7 @@ export class NavbarComponent implements OnInit {
   public focus;
   public listTitles: any[];
   public location: Location;
-
+  profilePicture:string = environment.pictureUrl;
   constructor(location: Location,  private element: ElementRef, private router: Router, private authService: AuthService) {
     this.location = location;
   }

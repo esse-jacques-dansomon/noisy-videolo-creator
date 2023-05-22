@@ -6,6 +6,7 @@ import {NotiflixService} from "../../core/services/notiflix.service";
 import {OccasionTypeService} from "../../data/services/occasion-type.service";
 import {OccasionType} from "../../data/models/occasion-type";
 import {CreatorService} from "../../data/services/creator.service";
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-user-profile',
@@ -22,7 +23,10 @@ export class UserProfileComponent implements OnInit {
   private selectedFile: File;
   preview: any = null;
   previewVideo: Boolean;
-
+  selectedVideo:File;
+  profilePicture:string = environment.pictureUrl;
+  profileVideo:string = environment.mediaUrl;
+  validationVisible:boolean = false;
   constructor(
     private authService : AuthService,
     private _notiflixService : NotiflixService,
@@ -77,6 +81,8 @@ export class UserProfileComponent implements OnInit {
           this.profilForm.patchValue(this.creator);
           this.occasionForm.get('priceNormal').patchValue(this.getOccasionPrice(1));
           this.occasionForm.get('priceEntreprise').patchValue(this.getOccasionPrice(2));
+          this.profilePicture = this.profilePicture + this.creator.profile_image;
+          this.profileVideo = this.profileVideo + this.creator.video_presentation;
         }
       }
     )
@@ -154,6 +160,11 @@ export class UserProfileComponent implements OnInit {
     if (this.selectedFile) {
       const file: File | null = this.selectedFile;
       if (file) {
+        //If the file is an image
+        if (file.type.split('/')[0] !== 'image') {
+          this._notiflixService.failure('Format de fichier non pris en charge');
+          return;
+        }
         this.imageProfile = file;
         const reader = new FileReader();
         reader.onload = (e: any) => {
@@ -161,9 +172,37 @@ export class UserProfileComponent implements OnInit {
           this.preview = e.target.result;
         };
         reader.readAsDataURL(this.imageProfile);
+        const formData = new FormData(); 
+        formData.append('picture', this.imageProfile);
+        this._creatorService.updateProfilPicture(formData, this.creator.id).subscribe(data=>{
+          this._notiflixService.success('Votre photo de profil a été mise à jour');
+          this._patchForm();
+        });
       }
     }
 
 
+  }
+
+  onFileSelected(event: any) {
+    //Si le fichier est une video mp4
+    if(event.target.files[0].type == "video/mp4"){
+      this.validationVisible = true;
+      this.selectedVideo = event.target.files[0];
+    }else{
+      this._notiflixService.failure('Format de fichier non pris en charge');
+    }
+  }
+
+  onFormSubmit(){
+    if(this.selectedVideo){
+      const formData = new FormData(); 
+      formData.append('video', this.selectedVideo);
+      this._creatorService.updateProfilVideo(formData, this.creator.id).subscribe(data=>{
+        this._notiflixService.success('Votre video de présentation a été mise à jour');
+        this._patchForm();
+        this.validationVisible = false;
+      });
+    }
   }
 }
